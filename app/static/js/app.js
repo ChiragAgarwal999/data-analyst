@@ -1,23 +1,21 @@
-const dz = document.getElementById('dropzone');
-const fi = document.getElementById('fileInput');
-const rs = document.getElementById('result');
-const pg = document.getElementById('progress');
-const mode = document.getElementById('modeToggle');
+let fileId = null;
+const out = document.getElementById('out');
+const statusEl = document.getElementById('status');
 
-mode.addEventListener('change',()=>document.body.classList.toggle('dark', mode.checked));
-dz.addEventListener('click', ()=>fi.click());
-dz.addEventListener('dragover', e=>{e.preventDefault();});
-dz.addEventListener('drop', e=>{e.preventDefault(); upload(e.dataTransfer.files[0]);});
-fi.addEventListener('change', ()=>upload(fi.files[0]));
-
-async function upload(file){
+document.getElementById('upload').onclick = async () => {
+  const file = document.getElementById('file').files[0];
   if(!file) return;
-  pg.textContent='Uploading and analyzing...';
-  const form = new FormData();
-  form.append('file', file);
-  const res = await fetch('/api/analyze', {method:'POST', body:form});
+  const form = new FormData(); form.append('file', file);
+  const res = await fetch('/upload', {method:'POST', body: form});
   const data = await res.json();
-  if(!res.ok){ rs.textContent = data.detail || 'Failed'; pg.textContent=''; return; }
-  pg.textContent='Completed';
-  rs.textContent = JSON.stringify(data, null, 2);
-}
+  fileId = data.file_id; statusEl.textContent = `Uploaded: ${fileId}`; out.textContent = JSON.stringify(data,null,2);
+};
+
+document.getElementById('process').onclick = async () => {
+  if(!fileId) return;
+  statusEl.textContent = 'Processing...';
+  const res = await fetch(`/process/${fileId}`, {method:'POST'});
+  const data = await res.json();
+  out.textContent = JSON.stringify(data, null, 2);
+  statusEl.innerHTML = `Done. <a href="/report/${fileId}">PDF Report</a> | <a href="/cleaned/${fileId}">Cleaned Excel</a>`;
+};
