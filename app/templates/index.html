@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Excel Analytics Platform</title>
+  <link rel="stylesheet" href="/static/css/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>AI-Powered Excel Analytics</h1>
+    <label class="toggle"><input type="checkbox" id="modeToggle"/>Dark mode</label>
+    <div id="dropzone">Drag & drop .xlsx/.csv file here or click to upload</div>
+    <input type="file" id="fileInput" accept=".xlsx,.csv" hidden />
+    <div id="progress"></div>
+    <pre id="result"></pre>
+  </div>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
