@@ -47,20 +47,26 @@ async def run_full_pipeline(file_id: str, record: dict):
     nums = features.select_dtypes(include="number")
     importances = []
     if nums.shape[1] > 1:
-        target = strategy.get("target_candidates", [nums.columns[-1]])[0]
+        target_candidates = strategy.get("target_candidates") or []
+        target = target_candidates[0] if target_candidates else nums.columns[-1]
         if target not in nums.columns:
             target = nums.columns[-1]
         X = nums.drop(columns=[target]).fillna(0)
         y = nums[target].fillna(0)
+        if X.shape[1] == 0 or y.empty:
+            target = nums.columns[-1]
+            X = nums.drop(columns=[target]).fillna(0)
+            y = nums[target].fillna(0)
         if strategy.get("ml_model_type") == "classification":
             model = RandomForestClassifier(n_estimators=100, random_state=42)
             y = y.round().astype(int)
         else:
             model = RandomForestRegressor(n_estimators=100, random_state=42)
-        model.fit(X, y)
-        importances = sorted([
-            {"feature": c, "importance": float(i)} for c, i in zip(X.columns, model.feature_importances_)
-        ], key=lambda x: x["importance"], reverse=True)
+        if X.shape[1] > 0 and len(y) > 0:
+            model.fit(X, y)
+            importances = sorted([
+                {"feature": c, "importance": float(i)} for c, i in zip(X.columns, model.feature_importances_)
+            ], key=lambda x: x["importance"], reverse=True)
 
     charts = await asyncio.to_thread(create_charts, features, output_dir)
     fi_chart = await asyncio.to_thread(feature_importance_plot, importances, output_dir)

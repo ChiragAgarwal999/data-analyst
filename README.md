@@ -1,4 +1,4 @@
-# AI Data Analyst SaaS (FastAPI).
+# AI Data Analyst SaaS (FastAPI)
 
 This app implements a production-style backend workflow:
 

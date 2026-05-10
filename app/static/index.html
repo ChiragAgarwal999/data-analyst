@@ -1,10 +1,37 @@
 <!doctype html>
-<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="/assets/css/styles.css"><title>AI Data Analyst SaaS</title></head>
-<body><main class="wrap"><h1>AI Data Analyst SaaS</h1>
-<p>Upload → Process → Download cleaned Excel + PDF report.</p>
-<input id="file" type="file" accept=".xlsx,.csv"/>
-<button id="upload">1) Upload</button>
-<button id="process">2) Process</button>
-<div id="status"></div><pre id="out"></pre></main>
-<script src="/assets/js/app.js"></script></body></html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Data Analyst SaaS</title>
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <main class="container">
+    <header class="hero">
+      <p class="eyebrow">Intelligent Analytics Automation</p>
+      <h1>AI Data Analyst SaaS</h1>
+      <p class="sub">Upload messy Excel/CSV files and get cleaned datasets, feature insights, and downloadable analytics reports.</p>
+    </header>
+
+    <section class="card">
+      <h2>1) Upload Dataset</h2>
+      <div class="uploader">
+        <input id="file" type="file" accept=".xlsx,.csv" />
+        <button id="upload">Upload</button>
+        <button id="process" class="primary">Run Analysis</button>
+      </div>
+      <div id="status" class="status idle">Waiting for file upload</div>
+      <div class="progress-wrap"><div id="progress" class="progress"></div></div>
+    </section>
+
+    <section class="card">
+      <h2>2) Results</h2>
+      <div id="downloads" class="downloads"></div>
+      <pre id="out"></pre>
+    </section>
+  </main>
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
