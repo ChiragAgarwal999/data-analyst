@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nexus Analyst AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+
+  <main class="layout">
+    <aside class="side-panel">
+      <h1>Nexus Analyst AI</h1>
+      <p class="muted">From messy spreadsheets to model-ready intelligence.</p>
+      <ul>
+        <li>Multi-sheet ingestion</li>
+        <li>Auto cleaning + imputation</li>
+        <li>Feature engineering + baseline ML</li>
+        <li>PDF report + cleaned Excel export</li>
+      </ul>
+      <div class="status-box" id="status">Idle · waiting for upload</div>
+    </aside>
+
+    <section class="workspace">
+      <div class="card upload-card">
+        <h2>Upload Dataset</h2>
+        <p>Drop an Excel/CSV file or choose one manually.</p>
+        <label for="file" class="dropzone" id="dropzone">
+          <input id="file" type="file" accept=".xlsx,.csv" hidden />
+          <span id="dropLabel">Drop file here or click to browse</span>
+        </label>
+        <div class="actions">
+          <button id="upload" class="btn">Upload</button>
+          <button id="process" class="btn primary">Run Pipeline</button>
+        </div>
+        <div class="progress-wrap"><div id="progress" class="progress"></div></div>
+      </div>
+
+      <div class="card outputs-card">
+        <div class="outputs-head">
+          <h2>Pipeline Output</h2>
+          <div id="downloads" class="downloads"></div>
+        </div>
+        <pre id="out">No results yet.</pre>
+      </div>
+    </section>
+  </main>
+
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
